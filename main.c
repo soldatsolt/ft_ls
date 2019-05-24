@@ -6,7 +6,7 @@
 /*   By: kmills <kmills@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 13:47:18 by kmills            #+#    #+#             */
-/*   Updated: 2019/05/24 22:41:44 by kmills           ###   ########.fr       */
+/*   Updated: 2019/05/24 23:12:05 by kmills           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,12 @@
 
 int		main(int argc, char **argv)
 {
-	struct stat	buf;
-	DIR			*dir;
-	int			sstat;
+	struct stat		buf;
+	DIR				*dir;
+	int				sstat;
 	struct timespec	ff;
+	struct group	*grp;
+	char			*timechar;
 
 	sstat = stat("libft", &buf);
 		printf("---------------------------------------------------\n");
@@ -65,6 +67,19 @@ int		main(int argc, char **argv)
 		printf("---------------------------------------------------\n");
 	printf("st_uid %44u\n", buf.st_uid); // getpwuid - перевод в строку
 		printf("---------------------------------------------------\n");
+		printf("---------------------------------------------------\n");
 
+
+	grp = getgrgid(buf.st_gid);
+
+	printf("grp->gr_gid %u\n", grp->gr_gid);
+	printf("grp->gr_mem %s\n", grp->gr_mem[0]);
+	printf("grp->gr_name %s\n", grp->gr_name);
+	printf("grp->gr_passwd %s\n", grp->gr_passwd);
+
+	timechar = ctime(&buf.st_mtimespec.tv_sec);
+	printf("---------------------------------------------------\n");
+	printf("---------------------------------------------------\n");
+	printf("time %47s\n", timechar);
 	return (0);
 }
