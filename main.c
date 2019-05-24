@@ -6,7 +6,7 @@
 /*   By: kmills <kmills@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 13:47:18 by kmills            #+#    #+#             */
-/*   Updated: 2019/05/24 23:12:44 by kmills           ###   ########.fr       */
+/*   Updated: 2019/05/24 23:19:21 by kmills           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int		main(int argc, char **argv)
 	int				sstat;
 	struct timespec	ff;
 	struct group	*grp;
-	char			*timechar;
+	char			*mtime;
+	char			*birthtime;
+	char			*atime;
+	char			*ctimespec;
 
 	sstat = stat("libft", &buf);
 		printf("---------------------------------------------------\n");
@@ -77,9 +80,19 @@ int		main(int argc, char **argv)
 	printf("grp->gr_name %s\n", grp->gr_name);
 	printf("grp->gr_passwd %s\n", grp->gr_passwd);
 
-	timechar = ctime(&buf.st_mtimespec.tv_sec);
-	printf("---------------------------------------------------\n");
-	printf("---------------------------------------------------\n");
-	printf("time %47s\n", timechar);
+	atime = ctime(&buf.st_atimespec.tv_sec);
+	birthtime = ctime(&buf.st_birthtimespec.tv_sec);
+	ctimespec = ctime(&buf.st_ctimespec.tv_sec);
+	mtime = ctime(&buf.st_mtimespec.tv_sec);
+		printf("---------------------------------------------------\n");
+		printf("---------------------------------------------------\n");
+	printf("atime %46s\n", atime);
+		printf("---------------------------------------------------\n");
+	printf("birthtime %42s\n", birthtime);
+		printf("---------------------------------------------------\n");
+	printf("ctime %46s\n", ctimespec);
+		printf("---------------------------------------------------\n");
+	printf("mtime %46s\n", mtime);
+		printf("---------------------------------------------------\n");
 	return (0);
 }
