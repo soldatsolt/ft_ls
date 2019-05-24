@@ -6,7 +6,7 @@
 /*   By: kmills <kmills@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 13:47:18 by kmills            #+#    #+#             */
-/*   Updated: 2019/05/24 23:29:42 by kmills           ###   ########.fr       */
+/*   Updated: 2019/05/24 23:42:17 by kmills           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,26 @@ int		main(int argc, char **argv)
 		printf("---------------------------------------------------\n");
 		printf("---------------------------------------------------\n");
 
-		
+
+	printf("RIGHTS :\n"); // from http://codewiki.wikidot.com/c:system-calls:stat
+
+	printf("File Size: \t\t%lld bytes\n", buf.st_size);
+	printf("Number of Links: \t%d\n",buf.st_nlink);
+	printf("File inode: \t\t%llu\n",buf.st_ino);
+
+	printf("File Permissions: \t");
+	printf( (S_ISDIR(buf.st_mode)) ? "d" : "-");
+	printf( (buf.st_mode & S_IRUSR) ? "r" : "-");
+	printf( (buf.st_mode & S_IWUSR) ? "w" : "-");
+	printf( (buf.st_mode & S_IXUSR) ? "x" : "-");
+	printf( (buf.st_mode & S_IRGRP) ? "r" : "-");
+	printf( (buf.st_mode & S_IWGRP) ? "w" : "-");
+	printf( (buf.st_mode & S_IXGRP) ? "x" : "-");
+	printf( (buf.st_mode & S_IROTH) ? "r" : "-");
+	printf( (buf.st_mode & S_IWOTH) ? "w" : "-");
+	printf( (buf.st_mode & S_IXOTH) ? "x" : "-");
+	printf("\n\n");
+
+
 	return (0);
 }
