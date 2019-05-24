@@ -30,4 +30,4 @@ git:
 	git push
 
 rerun: re
-	@./ft_printf
+	@./$(NAME)
