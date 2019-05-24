@@ -6,7 +6,7 @@
 /*   By: kmills <kmills@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/24 13:47:18 by kmills            #+#    #+#             */
-/*   Updated: 2019/05/24 23:19:21 by kmills           ###   ########.fr       */
+/*   Updated: 2019/05/24 23:29:42 by kmills           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		main(int argc, char **argv)
 	char			*birthtime;
 	char			*atime;
 	char			*ctimespec;
+	struct passwd	*pwd;
 
 	sstat = stat("libft", &buf);
 		printf("---------------------------------------------------\n");
@@ -94,5 +95,32 @@ int		main(int argc, char **argv)
 		printf("---------------------------------------------------\n");
 	printf("mtime %46s\n", mtime);
 		printf("---------------------------------------------------\n");
+		printf("---------------------------------------------------\n");
+
+		
+	pwd = getpwuid(buf.st_uid);
+	printf(">pw_change %40ld\n", pwd->pw_change);
+		printf("---------------------------------------------------\n");
+	printf("pw_class %38s\n", pwd->pw_class);
+		printf("---------------------------------------------------\n");
+	printf("pw_dir %44s\n", pwd->pw_dir);
+		printf("---------------------------------------------------\n");
+	printf("pw_expire %41ld\n", pwd->pw_expire);
+		printf("---------------------------------------------------\n");
+	printf("pw_gecos %42s\n", pwd->pw_gecos);
+		printf("---------------------------------------------------\n");
+	printf("pw_gid %44u\n", pwd->pw_gid);
+		printf("---------------------------------------------------\n");
+	printf("pw_name %43s\n", pwd->pw_name);
+		printf("---------------------------------------------------\n");
+	printf("pw_passwd %41s\n", pwd->pw_passwd);
+		printf("---------------------------------------------------\n");
+	printf("pw_shell %42s\n", pwd->pw_shell);
+		printf("---------------------------------------------------\n");
+	printf("pw_uid %44u\n", pwd->pw_uid);
+		printf("---------------------------------------------------\n");
+		printf("---------------------------------------------------\n");
+
+		
 	return (0);
 }
