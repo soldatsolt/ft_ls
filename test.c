@@ -23,9 +23,6 @@ int		main()
 	while ((struct_dirent = readdir(dir)))
 	{
 		stat(struct_dirent->d_name, &buf);
-		printf("%s\n", perm);
-		perm = ft_strcpy(perm, "----------");
-		printf("%s\t\t", struct_dirent->d_name);
 		if (S_ISDIR(buf.st_mode))
 			perm[0] = 'd';
 		else if (S_ISCHR(buf.st_mode))
@@ -50,6 +47,9 @@ int		main()
 			perm[8] = 'w';
 		if (buf.st_mode & S_IXOTH)
 			perm[9] = 'x';
+		printf("%s\t", perm);
+		perm = ft_strcpy(perm, "----------");
+		printf("%s\n", struct_dirent->d_name);
 	}
 	closedir(dir);
 	return (0);
