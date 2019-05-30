@@ -7,24 +7,16 @@ int		main()
 	char			*perm;
 	struct stat		buf;
 	struct passwd	*pwd;
+	struct group	*grp;
 
 	dir = opendir(".");
 	perm = ft_strdup("----------");
-
-
-
-
-
-
-
-
-
-
 
 	while ((struct_dirent = readdir(dir)))
 	{
 		stat(struct_dirent->d_name, &buf);
 		pwd = getpwuid(buf.st_uid);
+		grp = getgrgid(buf.st_gid);
 		if (S_ISDIR(buf.st_mode))
 			perm[0] = 'd';
 		else if (S_ISCHR(buf.st_mode))
@@ -52,6 +44,8 @@ int		main()
 		printf("%s\t", perm);
 		printf("%u\t", buf.st_nlink);
 		printf("%s\t", pwd->pw_name);
+		printf("%s\t", grp->gr_name);
+		printf("%lld\t", buf.st_size);
 		perm = ft_strcpy(perm, "----------");
 		printf("%s\n", struct_dirent->d_name);
 	}
