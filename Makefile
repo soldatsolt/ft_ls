@@ -13,6 +13,10 @@ $(NAME): $(LIBFT)
 g:
 	@gcc -g $(SRCS) -o $(NAME)
 
+test:
+	@gcc test.c ./libft/libft.a
+	@./a.out
+
 clean:
 	@$(MAKE) -C ./libft clean
 
