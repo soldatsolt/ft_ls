@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-int		main()
+int		main(int argc, char **argv)
 {
 	struct dirent	*struct_dirent;
 	DIR				*dir;
@@ -8,8 +8,14 @@ int		main()
 	struct stat		buf;
 	struct passwd	*pwd;
 	struct group	*grp;
+	char			*mtime;
+	char			*time;
 
-	dir = opendir(".");
+	if (argc < 2)
+		dir = opendir(".");
+	else
+		dir = opendir(argv[1]);
+	
 	perm = ft_strdup("----------");
 
 	while ((struct_dirent = readdir(dir)))
@@ -17,6 +23,8 @@ int		main()
 		stat(struct_dirent->d_name, &buf);
 		pwd = getpwuid(buf.st_uid);
 		grp = getgrgid(buf.st_gid);
+		mtime = ctime(&buf.st_mtimespec.tv_sec);
+		time = ft_strsub(mtime, 4, 12);
 		if (S_ISDIR(buf.st_mode))
 			perm[0] = 'd';
 		else if (S_ISCHR(buf.st_mode))
@@ -46,6 +54,7 @@ int		main()
 		printf("%s\t", pwd->pw_name);
 		printf("%s\t", grp->gr_name);
 		printf("%lld\t", buf.st_size);
+		printf("%s\t", time);
 		perm = ft_strcpy(perm, "----------");
 		printf("%s\n", struct_dirent->d_name);
 	}
