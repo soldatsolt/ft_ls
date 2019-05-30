@@ -6,6 +6,7 @@ int		main()
 	DIR				*dir;
 	char			*perm;
 	struct stat		buf;
+	struct passwd	*pwd;
 
 	dir = opendir(".");
 	perm = ft_strdup("----------");
@@ -23,6 +24,7 @@ int		main()
 	while ((struct_dirent = readdir(dir)))
 	{
 		stat(struct_dirent->d_name, &buf);
+		pwd = getpwuid(buf.st_uid);
 		if (S_ISDIR(buf.st_mode))
 			perm[0] = 'd';
 		else if (S_ISCHR(buf.st_mode))
@@ -48,6 +50,8 @@ int		main()
 		if (buf.st_mode & S_IXOTH)
 			perm[9] = 'x';
 		printf("%s\t", perm);
+		printf("%u\t", buf.st_nlink);
+		printf("%s\t", pwd->pw_name);
 		perm = ft_strcpy(perm, "----------");
 		printf("%s\n", struct_dirent->d_name);
 	}
