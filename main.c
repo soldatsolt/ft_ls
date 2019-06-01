@@ -57,7 +57,9 @@ int		main(int argc, char **argv)
 		printf("%s\t", time);
 		perm = ft_strcpy(perm, "----------");
 		printf("%s\n", struct_dirent->d_name);
+		free(time);
 	}
+	free(perm);
 	closedir(dir);
 	return (0);
 }
