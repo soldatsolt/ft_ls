@@ -1,3 +1,20 @@
+/*
+
+	https://www.ibm.com/developerworks/ru/library/au-unix-readdir/index.html
+
+*/
+
+/*
+Используя макрос S_*() для поля st_mode, можно определить тип файла:
+
+S_ISBLK(mode) – специальный блочный файл? (обычно это блочное устройство).
+S_ISCHR(mode) – специальный символьный файл? (обычно это символьное устройство).
+S_ISDIR(mode) – каталог?
+S_ISFIFO(mode) – UNIX-канал (pipe) или файл типа FIFO?
+S_ISLNK(mode) – символическая ссылка?
+S_ISREG(mode) – обычный файл?
+*/
+
 #include "ft_ls.h"
 
 int		main(int argc, char **argv)
@@ -18,11 +35,19 @@ int		main(int argc, char **argv)
 	
 	perm = ft_strdup("----------");
 
-	while ((struct_dirent = readdir(dir)))
+	if (dir == NULL)
 	{
-		stat(struct_dirent->d_name, &buf);
-		pwd = getpwuid(buf.st_uid);
-		grp = getgrgid(buf.st_gid);
+		printf("ls: %s: No such file or directory\n", argv[1]);
+		return (0);
+	}
+	while ((struct_dirent = readdir(dir)))
+	{	//	первый if - на . и на .. TODO: мб это условие стоит убрать по дальнейшей работе
+		// но для рекурсии, скорее всего, стоит оставить это условие во избежание ./././././././././
+		if (!ft_strcmp(struct_dirent->d_name, ".") || !ft_strcmp(struct_dirent->d_name, ".."))
+			continue ;
+		stat(struct_dirent->d_name, &buf);	// FIXME: Функция stat() на большинстве
+		pwd = getpwuid(buf.st_uid);			// UNIX-систем работает медленно. Для рекурсии можно
+		grp = getgrgid(buf.st_gid);			// не вызывать её, если это не каталог (?) (flags?)
 		mtime = ctime(&buf.st_mtimespec.tv_sec);
 		time = ft_strsub(mtime, 4, 12);
 		if (S_ISDIR(buf.st_mode))
