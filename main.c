@@ -27,6 +27,10 @@ int		main(int argc, char **argv)
 	struct group	*grp;
 	char			*mtime;
 	char			*time;
+	t_ls			ls;
+
+	ls.f = F_X_;
+	printf("%llu\n", ls.f);
 
 	if (argc < 2)
 		dir = opendir(".");
